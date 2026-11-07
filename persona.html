@@ -41,17 +41,17 @@
         </nav>
         <main id="main-registro" class="main-content">
             <section class="main-head">
-                <h2>Registro de persona</h2>
+                <h2 id="main-title">Registro de persona</h2>
             </section>
             <section class="main-form">
-                <form action="" method="">
+                <form id="form-registro" class="form-content">
                     <div class="form-group">
-                        <label for="name">Nombre:</label>
+                        <label for="name" class="form-label">Nombre:</label>
                         <br/>
                         <input type="text" id="name" class="form-input" />
                     </div>
                     <div class="form-group">
-                        <label for="email">Correo Electrónico:</label>
+                        <label for="email" class="form-label">Correo Electrónico:</label>
                         <br/>
                         <input type="email" id="email" class="form-input"/>
                     </div>
@@ -60,17 +60,56 @@
                     <br/>
                     <a (click)="enviarDatos()">Enviar Datos</a>-->
                     <a onClick="enviarDatos()">Enviar Datos</a>
+                    <br/>
                     <button onclick="saludar('Carla')">Enviar</button>
+                    <br/>
+                    <button onclick="obtenerUsuario()">Fetch GET Users</button>
                 </form>
             </section>
         </main>
         
         <script>
+            var formulario  = document.getElementById("form-registro");
+
+            formulario.addEventListener("submit", function(event){
+                event.preventDefault();
+                const nombre = document.getElementById("name").value;
+                const correo = document.getElementById("email").value;
+                /* Lógica booleana para JS
+                    || => OR
+                    && => AND
+                */
+                if(nombre == "" || correo == "") {
+                    alert("No ingreso nombre o correo electrónico");
+                } else {
+                    alert("Gracias por tu registro : "+nombre);
+                }
+            })
+            
+            
+            
+            
             function enviarDatos() {
                 alert("Hola Mundo!!!");
             }
             function saludar(nombre){
                 alert("Hola "+nombre+"!");
+            }
+            function cambiarTitulo() {
+                document.getElementById("main-title").innerHTML = "Accediendo al DOM";
+                document.getElementsByClassName("form-label")[0].innerHTML = "Label DOM";
+                document.getElementsByTagName("button")[0].innerHTML = "Botón DOM";
+            }
+
+            function obtenerUsuario() {
+                fetch("https://jsonplaceholder.typicode.com/users")
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                })
+                .catch(error => {
+                    console.error("Error al obtener los usuarios:", error);
+                });
             }
         </script>
     </body>
